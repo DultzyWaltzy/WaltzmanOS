@@ -3,9 +3,8 @@
 Waltzman OS is an operating system written in C# using the COSMOS framework.
 As of now, it has basic command line features such as power management, clearing the screen and more.
 
-========================
-======= Features =======
-========================
+# Features 
+
   Basic Commands:
      beep - Makes a beep noise
      clear/cls - Clears the screen
@@ -14,4 +13,5 @@ As of now, it has basic command line features such as power management, clearing
     reboot - Reboot your computer
     ram - Shows the amount of available RAM
 
-# This project uses the MIT license.
+# License
+  This open-source project uses the MIT license.
