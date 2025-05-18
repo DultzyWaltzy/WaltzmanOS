@@ -11,6 +11,21 @@ namespace Waltzman_OS
 {
     public class Kernel : Sys.Kernel
     {
+        public bool confirmation(string confirm_text)
+        {
+            Console.Write(confirm_text);
+            String confirmation = Console.ReadLine();
+            String confirmation_lower = confirmation.ToLower();
+
+            if (confirmation_lower == "y" || confirmation_lower == "yes")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         protected override void BeforeRun()
         {
@@ -25,7 +40,7 @@ namespace Waltzman_OS
 
         protected override void Run()
         {
-            Console.Write("-> ");
+            Console.Write(Filesystem.current_directory + " $ ");
             String user_input = Console.ReadLine();
             String input_lower = user_input.ToLower();
 
@@ -41,11 +56,9 @@ namespace Waltzman_OS
 
             else if (input_lower == "reboot")
             {
-                Console.Write("Are you sure you want to reboot the OS? ");
-                String confirm = Console.ReadLine();
-                String confirm_lower = confirm.ToLower();
+                bool confirm = confirmation("Are you sure you want to reboot the OS? ");
 
-                if (confirm_lower == "y" || confirm_lower == "yes")
+                if (confirm)
                 {
                     Console.WriteLine("Rebooting...");
                     CPU.Reboot();
@@ -58,11 +71,9 @@ namespace Waltzman_OS
 
             else if (input_lower == "shutdown")
             {
-                Console.Write("Are you sure you want to shutdown your computer? ");
-                String confirm_shutdown = Console.ReadLine();
-                String confirm_shutdown_lower = confirm_shutdown.ToLower();
+                bool shutdown_check = confirmation("Are you sure you want to shutdown your computer? ");
 
-                if (confirm_shutdown_lower == "y" || confirm_shutdown_lower == "yes")
+                if (shutdown_check)
                 {
                     try
                     {
