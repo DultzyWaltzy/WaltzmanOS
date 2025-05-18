@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Sys = Cosmos.System;
+using Cosmos.System.FileSystem;
+using Cosmos.System.FileSystem.VFS;
 
 namespace Waltzman_OS
 {
@@ -12,7 +14,10 @@ namespace Waltzman_OS
 
         protected override void BeforeRun()
         {
+
             Console.Clear();
+            Console.WriteLine("Booting...");
+            Filesystem.Init_FS();
             Console.WriteLine("WaltzmanOS booted. Press Enter to Continue.");
             Console.ReadLine();
             Console.Clear();
@@ -26,7 +31,7 @@ namespace Waltzman_OS
 
             if (input_lower == "beep")
             {
-                Console.Beep(); //make beep noise (very needed feature)
+                Console.Beep(); // Make beep noise (very needed feature)
             }
 
             else if (input_lower == "clear" || input_lower == "cls")
@@ -50,6 +55,7 @@ namespace Waltzman_OS
                     Console.WriteLine("Reboot aborted.");
                 }
             }
+
             else if (input_lower == "shutdown")
             {
                 Console.Write("Are you sure you want to shutdown your computer? ");
@@ -65,7 +71,7 @@ namespace Waltzman_OS
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Shutdown failed: " + e.Message); //print error message
+                        Console.WriteLine("Shutdown failed: " + e.Message); // Print error message
                         Console.WriteLine("Shutdown through the terminal may not be supported on your hardware.");
                         Console.WriteLine("You may need to shutdown your computer manually.");
                     }
@@ -75,12 +81,16 @@ namespace Waltzman_OS
                     Console.WriteLine("Shutdown aborted.");
                 }
             }
-            else if(input_lower == "ram")
-            {
-                Console.WriteLine("Available RAM: " + Cosmos.Core.GCImplementation.GetAvailableRAM());
-                Console.WriteLine("Total RAM: " + Cosmos.Core.CPU.GetAmountOfRAM);
-                Console.WriteLine("CPU Vendor: " + Cosmos.Core.CPU.GetCPUVendorName);
 
+            else if (input_lower == "ram")
+            {
+                Console.WriteLine("Available RAM: " + Cosmos.Core.GCImplementation.GetAvailableRAM() + "KB");
+            }
+
+            // Final check, do NOT put anything under this else
+            else
+            {
+                Filesystem.Handle_FS_Command(user_input); // Handle potential Filesystem input (outside func used to avoid even more else ifs)
             }
         }
     }
